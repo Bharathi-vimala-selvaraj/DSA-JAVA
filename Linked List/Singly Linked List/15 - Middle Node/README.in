@@ -1,0 +1,519 @@
+# Middle Node of Singly Linked List
+
+## Overview
+
+Finding the middle node returns the node located at the center of a linked list.
+
+Unlike arrays, linked lists do not provide direct access to the middle position.
+
+Therefore, we use the **Slow and Fast Pointer Technique**.
+
+---
+
+# Visual Representation
+
+Example 1:
+
+```
+head
+ ↓
+10 → 20 → 30 → 40 → 50 → null
+```
+
+Middle:
+
+```
+30
+```
+
+---
+
+Example 2:
+
+```
+head
+ ↓
+10 → 20 → 30 → 40 → null
+```
+
+For even length lists, the second middle node is returned.
+
+Output:
+
+```
+30
+```
+
+---
+
+# 🧠 Think Like the Pointer
+
+Imagine two people running on a road.
+
+One person walks.
+
+```
+Slow = 1 step
+```
+
+Another person runs.
+
+```
+Fast = 2 steps
+```
+
+Starting together:
+
+```
+Slow
+ ↓
+
+Fast
+ ↓
+
+10 → 20 → 30 → 40 → 50
+```
+
+After some time:
+
+Slow reaches:
+
+```
+30
+```
+
+Fast reaches:
+
+```
+50
+```
+
+When fast reaches the end,
+
+slow will always be standing at the middle.
+
+---
+
+# Core Idea
+
+Use two pointers:
+
+```
+slow
+fast
+```
+
+Slow moves one node.
+
+Fast moves two nodes.
+
+Because fast moves twice as quickly, when fast reaches the end, slow reaches the middle.
+
+---
+
+# Key Snippets
+
+## Initialize Both Pointers
+
+```java
+Node slow = head;
+Node fast = head;
+```
+
+Both start from the first node.
+
+---
+
+## Move Slow One Step
+
+```java
+slow = slow.next;
+```
+
+---
+
+## Move Fast Two Steps
+
+```java
+fast = fast.next.next;
+```
+
+---
+
+## Loop Condition
+
+```java
+while(fast != null && fast.next != null)
+```
+
+Why two conditions?
+
+Because fast moves two nodes.
+
+We must ensure both moves are safe.
+
+---
+
+# Algorithm
+
+1. Initialize slow and fast pointers at head.
+2. Move slow by one node.
+3. Move fast by two nodes.
+4. Continue until fast reaches the end.
+5. Slow will be pointing to the middle node.
+6. Return slow.
+
+---
+
+# 🧠 Pointer Visualization
+
+## Initial
+
+```
+slow
+ ↓
+
+fast
+ ↓
+
+10 → 20 → 30 → 40 → 50 → null
+```
+
+---
+
+## First Movement
+
+Slow:
+
+```
+20
+```
+
+Fast:
+
+```
+30
+```
+
+```
+10 → 20 → 30 → 40 → 50
+      ↑    ↑
+     slow fast
+```
+
+---
+
+## Second Movement
+
+Slow:
+
+```
+30
+```
+
+Fast:
+
+```
+50
+```
+
+```
+10 → 20 → 30 → 40 → 50
+            ↑          ↑
+          slow       fast
+```
+
+---
+
+Fast cannot move further.
+
+Stop.
+
+Answer:
+
+```
+slow = 30
+```
+
+---
+
+# 🧠 Why does this work?
+
+Assume the list has 6 nodes.
+
+```
+10 → 20 → 30 → 40 → 50 → 60
+```
+
+Fast moves twice the speed of slow.
+
+When fast travels:
+
+```
+6 nodes
+```
+
+Slow travels:
+
+```
+3 nodes
+```
+
+Therefore:
+
+```
+slow = middle
+```
+
+---
+
+# 🚨 What Happens If...
+
+## Mistake 1: Both move one step
+
+Wrong:
+
+```java
+slow = slow.next;
+fast = fast.next;
+```
+
+Both pointers travel together.
+
+Result:
+
+```
+fast is not faster
+```
+
+You cannot find the middle.
+
+---
+
+## Mistake 2: Moving fast three steps
+
+Wrong:
+
+```java
+fast = fast.next.next.next;
+```
+
+Now the relationship changes.
+
+Slow will no longer stop at the correct middle.
+
+---
+
+## Mistake 3: Wrong loop condition
+
+Wrong:
+
+```java
+while(fast.next != null)
+```
+
+Problem:
+
+If
+
+```
+fast = null
+```
+
+then accessing
+
+```
+fast.next
+```
+
+causes NullPointerException.
+
+---
+
+# Even Length Lists
+
+Example:
+
+```
+10 → 20 → 30 → 40
+```
+
+There are two middle nodes:
+
+```
+20 and 30
+```
+
+Using:
+
+```java
+slow = head;
+fast = head;
+```
+
+returns:
+
+```
+30
+```
+
+(second middle node)
+
+---
+
+# First Middle Node Variation
+
+If the interviewer asks for the first middle node:
+
+Initialize:
+
+```java
+fast = head.next;
+```
+
+Then slow stops at:
+
+```
+20
+```
+
+---
+
+# Time Complexity
+
+| Operation | Complexity |
+|---|---|
+| Find Middle | O(n) |
+
+Fast travels through the list once.
+
+---
+
+# Space Complexity
+
+| Operation | Complexity |
+|---|---|
+| Extra Space | O(1) |
+
+Only two pointers are used.
+
+---
+
+# Edge Cases
+
+## Empty List
+
+```
+head = null
+```
+
+Return null.
+
+---
+
+## Single Node
+
+```
+10 → null
+```
+
+Middle:
+
+```
+10
+```
+
+---
+
+## Two Nodes
+
+```
+10 → 20
+```
+
+Second middle:
+
+```
+20
+```
+
+---
+
+# Common Mistakes
+
+- Moving fast and slow at the same speed.
+- Forgetting to check `fast.next`.
+- Not understanding even-length behaviour.
+- Using counting method unnecessarily.
+
+---
+
+# Pointer Rules Learned
+
+## Rule 1
+
+Different pointer speeds can reveal hidden positions.
+
+---
+
+## Rule 2
+
+Fast pointer reaching the end tells us where slow should stop.
+
+---
+
+## Rule 3
+
+Before accessing `pointer.next`, always confirm the pointer is not null.
+
+---
+
+# Interview Insight
+
+### Q:
+Why don't we count the nodes first and then find the middle?
+
+### Answer:
+
+That requires two traversals.
+
+Slow and fast pointers find the middle in one traversal with O(1) space.
+
+---
+
+### Q:
+Where is this technique used?
+
+### Answer:
+
+- Cycle detection
+- Cycle starting point
+- Palindrome linked list
+- Finding kth node problems
+
+---
+
+# Summary
+
+The middle node algorithm is based on speed difference.
+
+```
+slow → 1 step
+
+fast → 2 steps
+```
+
+When fast finishes the journey,
+
+slow reaches the center.
+
+This simple idea becomes one of the most powerful linked list patterns in interviews.
+
+---
+
+# Related Problems
+
+- Nth Node From End
+- Floyd Cycle Detection
+- Palindrome Linked List
+- Merge Linked Lists
