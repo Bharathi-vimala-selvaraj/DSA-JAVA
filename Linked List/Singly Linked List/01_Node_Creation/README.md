@@ -1,162 +1,153 @@
-# 01. Node Creation (Singly Linked List)
+# Node Creation in Singly Linked List
 
-## 📌 Problem
+## Overview
 
-Learn how a node is created and how nodes are connected to form a Singly Linked List.
-
----
-
-## 🧠 Core Logic
-
-A linked list is made of **nodes**.
-
-Each node contains:
+A **Singly Linked List** is a linear data structure consisting of nodes, where each node stores:
 
 - Data
-- Address of the next node
+- A reference to the next node
 
-```text
-+------+-------+
-| Data | Next  |
-+------+-------+
-```
-
-The last node always points to
-
-```text
-null
-```
+Unlike arrays, linked list elements are not stored in contiguous memory. Each node is connected to the next node through a reference.
 
 ---
 
-## 📖 Node Structure
+## Node Structure
 
 ```java
-class Node{
+class Node {
+
     int data;
     Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
 }
 ```
 
-- `data` stores the value.
-- `next` stores the reference (address) of the next node.
+### Explanation
+
+- `data` stores the value of the node.
+- `next` stores the reference to the next node.
+- The constructor initializes the node with the given data and sets the next reference to `null`.
 
 ---
 
-## 🔗 Creating a Linked List
+## Visual Representation
 
-```text
-Before Linking
+```
+Node
 
-10      20      30
-
-After Linking
-
-10 → 20 → 30 → null
++---------+---------+
+|  data   |  next   |
++---------+---------+
 ```
 
-Connections are created using
+Example:
+
+```
+head
+ ↓
++----+------+      +----+------+      +----+------+
+| 10 |  ●───┼────► | 20 |  ●───┼────► | 30 | null |
++----+------+      +----+------+      +----+------+
+```
+
+---
+
+## Creating and Connecting Nodes
 
 ```java
+Node first = new Node(10);
+Node second = new Node(20);
+Node third = new Node(30);
+
 first.next = second;
 second.next = third;
+
+Node head = first;
 ```
 
----
+Result:
 
-## ⚙️ Algorithm
-
-1. Create the Node class.
-2. Store data in each node.
-3. Initialize `next` as `null`.
-4. Create multiple nodes.
-5. Connect nodes using the `next` pointer.
-6. Store the first node in `head`.
-
----
-
-## 🎯 Interview Traps
-
-### ❌ Trap 1
-
-Forgetting to initialize
-
-```java
-next = null;
 ```
-
-Although Java initializes object references to `null` by default, explicitly assigning it improves readability and makes your intent clear.
-
----
-
-### ❌ Trap 2
-
-Thinking a node stores another node.
-
-Wrong:
-
-```text
-Node
- ↓
-20
-```
-
-Correct:
-
-```text
-Node
- ↓
-Address of 20
-```
-
-The `next` variable stores a **reference**, not the entire node.
-
----
-
-### ❌ Trap 3
-
-Confusing `head` with a node.
-
-`head` is **only a reference** to the first node.
-
-```text
 head
  ↓
 10 → 20 → 30 → null
 ```
 
-If `head` changes, the first node of the list changes.
+---
+
+## Algorithm
+
+1. Define a `Node` class.
+2. Store the data inside the node.
+3. Initialize the `next` reference to `null`.
+4. Create the required nodes.
+5. Connect the nodes using the `next` reference.
+6. Store the address of the first node in `head`.
 
 ---
 
-## ⏱ Complexity
+## Dry Run
+
+Create three nodes:
+
+```
+10
+
+20
+
+30
+```
+
+Connect them:
+
+```
+10 → 20
+
+20 → 30
+```
+
+Assign the head:
+
+```
+head
+ ↓
+10 → 20 → 30 → null
+```
+
+---
+
+## Time Complexity
 
 | Operation | Complexity |
-|-----------|------------|
-| Create Node | O(1) |
+|----------|------------|
+| Create a Node | O(1) |
 | Connect Two Nodes | O(1) |
 
-Space per node:
+---
 
-```
-O(1)
-```
+## Space Complexity
+
+- **Per Node:** O(1)
+- **For N Nodes:** O(N)
 
 ---
 
-# 🔥 Alli's Interview Notes
+## Common Mistakes
 
-- A node is an object.
-- `head` is not a node; it points to the first node.
-- `next` stores a reference, not the node itself.
-- If you understand Node creation, every Linked List algorithm becomes pointer manipulation.
+- Forgetting to connect the nodes using the `next` reference.
+- Confusing the `head` reference with the first node.
+- Assuming `next` stores another node instead of a reference.
+- Forgetting that the last node should point to `null`.
 
 ---
 
-## ✅ Revision Checklist
+## Key Takeaways
 
-- [ ] Can I draw a node?
-- [ ] Can I explain what `next` stores?
-- [ ] Can I explain why the last node points to `null`?
-- [ ] Can I create and connect three nodes without looking at code?
-- [ ] Can I explain the difference between `head` and a node?
+- A linked list is formed by connecting individual nodes.
+- Each node stores data and a reference to the next node.
+- The `head` reference always points to the first node.
+- The last node in a singly linked list points to `null`.
